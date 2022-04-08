@@ -1,0 +1,4 @@
+Insects	L.S.1	L.S.2	L.S.3	L.S.4
+number_of_evaluated_parts_of_the_plant_	3	3	3	12
+Total_months	36	36	36	36
+AvaliacesPorMes	1	1	1	1
