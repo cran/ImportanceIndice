@@ -10,10 +10,9 @@
 #'Sum.n.I.I. = sum of all n.I.I.\cr
 #'Percentage of I.I. (P.I.I.)=(n.I.I. of each L.S./sum of all n.I.I.)*100
 
-#'@usage LossSource(DataLoss,DataProd,verbose)
+#'@usage LossSource(DataLoss,DataProd)
 #'@param DataLoss It is an matrix object containing data from loss sources.
 #'@param DataProd Matrix with a column containing the production data.
-#'@param verbose Logical value (TRUE/FALSE). TRUE displays the results of the analysis.
 
 #'@author Germano Leao Demolin-Leite (Instituto de Ciencias Agrarias da UFMG) \cr
 #' Alcinei Mistico Azevedo (Instituto de Ciencias Agrarias da UFMG)
@@ -36,7 +35,7 @@
 #' ###################################################
 #'
 #'
-#' LS=LossSource(DataLoss = DataLossSource,DataProd = DataProduction,verbose = TRUE)
+#' LS=LossSource(DataLoss = DataLossSource,DataProd = DataProduction)
 #' LS
 #'
 #' LP=LossProduction(Data=DataLossSource,Prod = DataProduction,
@@ -50,7 +49,7 @@
 # }
 #'
 
-LossSource=function(DataLoss,DataProd,verbose){
+LossSource=function(DataLoss,DataProd){
   Prod=DataProd
   D=DataLoss
   n=colSums(D)
@@ -85,13 +84,13 @@ LossSource=function(DataLoss,DataProd,verbose){
 
   Res1= data.frame(
     n=colSums(D),
-    R.P.=RP0,
+    RP=RP0,
     ks=RP0/n,
     c=colSums(D>0),
     ds=sapply(1:ncol(D), function (i) 1-suppressWarnings(chisq.test(D[,i])$p.value)),
-    n.I.I.=KS*c*ds,
-    Sum.n.I.I.=sum(KS*c*ds),
-    `P.I.I.`=100*NII/sum(NII))
+    nII=KS*c*ds,
+    Sum_nII=sum(KS*c*ds),
+    `PII`=100*NII/sum(NII))
 
 
   Var=apply(D,2,var)
@@ -118,6 +117,8 @@ LossSource=function(DataLoss,DataProd,verbose){
 
 
   Res2=data.frame(Var=Var,Mean=Mean,p.Value=p.Value,Aggregation=Class.)
-
-  return(list(Res1=round(Res1,6),Res2=Res2))
+  id=Res1[,2]!=0
+  Res1=Res1[id,]
+  Res2=Res2[id,]
+  return(list(Res1=round(Res1,6),Res2=Res2,id=id))
 }

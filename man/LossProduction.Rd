@@ -5,7 +5,7 @@
 \title{Obtaining indices associated with loss of production.}
 \usage{
 LossProduction(DataLossSource,Prod,Evaluation,SegurityMargen=0.75,
-MaximumToleranceOfLossFruits=1,verbose=TRUE)
+MaximumToleranceOfLossFruits=1)
 }
 \arguments{
 \item{DataLossSource}{It is an matrix object containing data from loss sources.}
@@ -19,8 +19,6 @@ Must have a column for each source of loss.}
 \item{SegurityMargen}{Segurity margen (default=0.75)}
 
 \item{MaximumToleranceOfLossFruits}{Maximum tolerance in percentage  (default=1)}
-
-\item{verbose}{Logical value (TRUE/FALSE). TRUE displays the results of the}
 }
 \value{
 The function returns several indices associated with the production loss.
@@ -60,15 +58,15 @@ Distribution_SolutionSource(DataSolutionSource)
 ###################################################
 
 
-LS=LossSource(DataLoss = DataLossSource,DataProd = DataProduction,verbose = TRUE)
+LS<-LossSource(DataLoss = DataLossSource,DataProd = DataProduction)
 LS
 
-LP=LossProduction(Data=DataLossSource,Prod = DataProduction,
+LP<-LossProduction(Data=DataLossSource,Prod = DataProduction,
                   Evaluation=DataNumberSamples,
                   SegurityMargen=0.75,MaximumToleranceOfLossFruits=1)
 LP
 
-ES=EffectivenessOfSolution(DataLossSource=DataLossSource,
+ES<-EffectivenessOfSolution(DataLossSource=DataLossSource,
                            DataSolutionSource=DataSolutionSource,Production=DataProduction)
 ES
 

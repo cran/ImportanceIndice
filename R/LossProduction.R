@@ -21,7 +21,7 @@
 
 #'
 #'@usage LossProduction(DataLossSource,Prod,Evaluation,SegurityMargen=0.75,
-#'MaximumToleranceOfLossFruits=1,verbose=TRUE)
+#'MaximumToleranceOfLossFruits=1)
 #'@param DataLossSource It is an matrix object containing data from loss sources.
 #'@param Prod Matrix with a column containing the production data.
 #'@param Evaluation Matrix containing three lines with the number of evaluations performed on each individual,
@@ -29,7 +29,6 @@
 #'Must have a column for each source of loss.
 #'@param SegurityMargen  Segurity margen (default=0.75)
 #'@param MaximumToleranceOfLossFruits Maximum tolerance in percentage  (default=1)
-#'@param verbose Logical value (TRUE/FALSE). TRUE displays the results of the
 
 #'@author Germano Leao Demolin-Leite (Instituto de Ciencias Agrarias da UFMG) \cr
 #' Alcinei Mistico Azevedo (Instituto de Ciencias Agrarias da UFMG)
@@ -53,40 +52,46 @@
 #' ###################################################
 #'
 #'
-#' LS=LossSource(DataLoss = DataLossSource,DataProd = DataProduction,verbose = TRUE)
+#' LS<-LossSource(DataLoss = DataLossSource,DataProd = DataProduction)
 #' LS
 #'
-#' LP=LossProduction(Data=DataLossSource,Prod = DataProduction,
+#' LP<-LossProduction(Data=DataLossSource,Prod = DataProduction,
 #'                   Evaluation=DataNumberSamples,
 #'                   SegurityMargen=0.75,MaximumToleranceOfLossFruits=1)
 #' LP
 #'
-#' ES=EffectivenessOfSolution(DataLossSource=DataLossSource,
+#' ES<-EffectivenessOfSolution(DataLossSource=DataLossSource,
 #'                            DataSolutionSource=DataSolutionSource,Production=DataProduction)
 #' ES
 # }
 #'
 
-LossProduction=function(DataLossSource,Prod,Evaluation,SegurityMargen=0.75,MaximumToleranceOfLossFruits=1,verbose=TRUE){
+LossProduction=function(DataLossSource,Prod,Evaluation,SegurityMargen=0.75,MaximumToleranceOfLossFruits=1){
   Data=DataLossSource
 
   D=Data
   Avaliacoes=Evaluation
-  Res=LossSource(DataLoss = D,DataProd = Prod,verbose=verbose)$Res1
+  Res0=LossSource(DataLoss = D,DataProd = Prod)
 
-  id=Res$P.I.I.>0
+Res=Res0$Res1
+id=Res0$id
 
-  LPLS=Res[id,2]*Res[id,1]
+  LPLS=Res[,2]*Res[,1]
   MEP=sum(LPLS)+sum(Prod)
   PLPLS=100*(LPLS)/MEP
   Avaliacoes2=Avaliacoes[,-1]
-  nBYsample=colSums(D)[id]/(nrow(D)*unlist(Avaliacoes2[1,id])*unlist(Avaliacoes2[2,id])*unlist(Avaliacoes2[3,id]))
+  Avaliacoes2=Avaliacoes2[,id]
+
+
+  nBYsample=colSums(D[,id])/(nrow(D)*unlist(Avaliacoes2[1,])*unlist(Avaliacoes2[2,])*unlist(Avaliacoes2[3,]))
 
   LC=(nBYsample*SegurityMargen*MaximumToleranceOfLossFruits)/PLPLS
 
 
-  Res1=cbind(L.P.L.S.=LPLS,M.E.P.=MEP,P.L.P.L.S.=PLPLS,n_per_sample=nBYsample,A.L=LC)
-Res2=colSums(Res1[,c(1,3)])
+  Res1=cbind(LPLS=LPLS,MEP=MEP,PLPLS=PLPLS,n_per_sample=nBYsample,AL=LC)
+  id=Res1[,1]!=0
+  Res1=Res1[id,]
+  Res2=colSums(Res1[,c(1,3)])
 list(Res1=Res1,Res2=Res2)
 
 }

@@ -40,32 +40,32 @@ Distribution_SolutionSource(DataSolutionSource)
 
 
 
-LS=LossSource(DataLoss = DataLossSource,DataProd = DataProduction,verbose = TRUE)
+LS<-LossSource(DataLoss = DataLossSource,DataProd = DataProduction)
 LS
 
-LP=LossProduction(Data=DataLossSource,Prod = DataProduction,
+LP<-LossProduction(Data=DataLossSource,Prod = DataProduction,
                  Evaluation=DataNumberSamples,
                  SegurityMargen=0.75,MaximumToleranceOfLossFruits=1)
 LP
 
 
-ES=EffectivenessOfSolution(DataLossSource=DataLossSource,
+ES<-EffectivenessOfSolution(DataLossSource=DataLossSource,
                           DataSolutionSource=DataSolutionSource,Production =DataProduction)
 ES
 
 
 
 
-id=SelectEffectivenessOfSolution(ES)
-id=c(TRUE , TRUE,  TRUE , FALSE,  TRUE)
+id<-SelectEffectivenessOfSolution(ES)
+id<-c(TRUE , TRUE,  TRUE , FALSE,  TRUE)
 
 
-SS=SolutionSource(SolutionData = DataSolutionSource,
+SS<-SolutionSource(SolutionData = DataSolutionSource,
                  EffectivenessOfSolution = ES,Production = DataProduction,Id = id)
 SS
 
 
-NAL=NonAttentionLevel(EffectivenessOfSolution = ES,LossProduction = LP,Id = id,Verbose=TRUE)
+NAL<-NonAttentionLevel(EffectivenessOfSolution = ES,LossProduction = LP,Id = id,Verbose=TRUE)
 NAL
 }
 \author{

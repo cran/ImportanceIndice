@@ -4,14 +4,12 @@
 \alias{LossSource}
 \title{Obtaining indices associated with sources of loss}
 \usage{
-LossSource(DataLoss,DataProd,verbose)
+LossSource(DataLoss,DataProd)
 }
 \arguments{
 \item{DataLoss}{It is an matrix object containing data from loss sources.}
 
 \item{DataProd}{Matrix with a column containing the production data.}
-
-\item{verbose}{Logical value (TRUE/FALSE). TRUE displays the results of the analysis.}
 }
 \value{
 The function returns several indices associated with the loss source.
@@ -42,7 +40,7 @@ Distribution_SolutionSource(DataSolutionSource)
 ###################################################
 
 
-LS=LossSource(DataLoss = DataLossSource,DataProd = DataProduction,verbose = TRUE)
+LS=LossSource(DataLoss = DataLossSource,DataProd = DataProduction)
 LS
 
 LP=LossProduction(Data=DataLossSource,Prod = DataProduction,

@@ -32,15 +32,15 @@
 #' ###################################################
 #'
 #'
-#' LS=LossSource(DataLoss = DataLossSource,DataProd = DataProduction,verbose = TRUE)
+#' LS<-LossSource(DataLoss = DataLossSource,DataProd = DataProduction)
 #' LS
 #'
-#' LP=LossProduction(Data=DataLossSource,Prod = DataProduction,
+#' LP<-LossProduction(Data=DataLossSource,Prod = DataProduction,
 #'                   Evaluation=DataNumberSamples,
 #'                   SegurityMargen=0.75,MaximumToleranceOfLossFruits=1)
 #' LP
 #'
-#' ES=EffectivenessOfSolution(DataLossSource=DataLossSource,
+#' ES<-EffectivenessOfSolution(DataLossSource=DataLossSource,
 #'                            DataSolutionSource=DataSolutionSource,Production=DataProduction)
 #' ES
 # }
@@ -56,8 +56,8 @@ EffectivenessOfSolution=function(DataLossSource,DataSolutionSource,Production, v
   Prod=Production
 
 
-  LS=LossSource(D1,Prod,verbose = F)
-  id=LS$Res1[,8]>0
+  LS=LossSource(D1,Prod)
+  id=LS$id
 
   D1b=as.matrix(D1[,id],nrow=nrow(Prod))
 
@@ -193,5 +193,6 @@ Escolhido="Quadratic"
 
   X= data.frame(es)
   colnames(X)=c("InimigoNatural","Praga","ES")
+  rownames(X)=NULL
   X
 }

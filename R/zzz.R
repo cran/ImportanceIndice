@@ -404,8 +404,11 @@ if(B2>0){
     if(util=="n"){res=0}
     #if((B2>0)&(util=="y")){util=FALSE}
    # if(util=="n"){res=0}
+
     rp=c(rp,res)
-  }
+
+
+    }
 
   return(rp)
 }
